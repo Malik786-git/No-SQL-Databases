@@ -97,4 +97,5 @@ MongoDB Deployment Options:
     Cloud Hosted Deployment 
        - MongoDB Altas
 
-
+//////////////////////////
+download from here: https://www.mongodb.com/try/download/community
