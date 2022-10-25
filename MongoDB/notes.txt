@@ -85,6 +85,10 @@ Mongos: For a sharded cluster, the mongos instance provide the interface between
         and write operations to the shards. From the perspective of the application, a mongos instance behaves identically to any other MongoDB to any other MongoDB 
         instance.
 
+Mongosh: THe MongoDB shell, mongosh is fully functionally JavaScript and Node.js 14x REPL environment for intereacting with MongoDB deployments. You can use the
+          MongoDB shell to test the queries and operations.
+
+////////////////////////////
 MongoDB Deployment Options:
     Locally Hosted Deployments
         - MongoDB Community  // we use for learning.
