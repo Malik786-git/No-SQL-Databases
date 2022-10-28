@@ -1,4 +1,8 @@
 --------------------------------------
+// start 
+C:\Users\ALI_WARIS>mongosh
+
+--------------------------------------
 // show databases
 
 test> show dbs
@@ -70,6 +74,10 @@ collegedb> db.teacher.insertMany([{name:"malik", age:24},{name:"kaber", age:22}]
 
 to check collection documents 👇
 collegedb> db.teacher.find()
+// or with pretify
+collegedb> db.teacher.find().pretty()
+
+output:
 [
   { _id: ObjectId("635c1578d5b206ff8d1dabab"), name: 'malik', age: 24 },
   { _id: ObjectId("635c16e5d5b206ff8d1dabac"), name: 'malik', age: 24 },
@@ -78,3 +86,83 @@ collegedb> db.teacher.find()
 
 
 --------------------------------------
+// to retrieve single document
+collegedb> db.teacher.findOne()
+
+output:
+{ _id: ObjectId("635c1578d5b206ff8d1dabab"), name: 'malik', age: 24 }
+
+
+
+--------------------------------------
+// retrieve document with specific limit
+
+collegedb> db.teacher.find().limit(2)
+output:
+[
+  { _id: ObjectId("635c1578d5b206ff8d1dabab"), name: 'malik', age: 24 },
+  { _id: ObjectId("635c16e5d5b206ff8d1dabac"), name: 'malik', age: 24 }
+]
+
+--------------------------------------
+// retrieve perticular document
+collegedb> db.teacher.find({name:"kaber"})
+
+output: here get the document who's name is kaber 
+[
+  { _id: ObjectId("635c16e5d5b206ff8d1dabad"), name: 'kaber', age: 22 }
+]
+
+more Example // get the document whos age is 24
+
+collegedb> db.teacher.find({age:24})
+
+output:
+[
+  { _id: ObjectId("635c1578d5b206ff8d1dabab"), name: 'malik', age: 24 },
+  { _id: ObjectId("635c16e5d5b206ff8d1dabac"), name: 'malik', age: 24 }
+]
+
+
+--------------------------------------
+// Update single document
+collegedb> db.teacher.updateOne({name:"kaber"}, {$set:{name:"ali waris", age:8}})
+
+update the new data values where name is kaber;
+
+
+--------------------------------------
+// Update Many document
+collegedb> db.teacher.updateMany({age:24}, {$set:{name:"sahabia", age:15}})
+
+
+--------------------------------------
+// delete single document
+collegedb> db.teacher.deleteOne({age:8}) 
+delete document where age is 8. 
+
+--------------------------------------
+// Delete many document
+collegedb> db.teacher.deleteMany({age:15})
+delete all the document where age is 15
+
+
+
+--------------------------------------
+Delete Database
+
+collegedb> db.dropDatabase()
+{ ok: 1, dropped: 'collegedb' }
+
+
+collegedb> show dbs
+admin    40.00 KiB
+config  108.00 KiB
+local    40.00 KiB
+
+
+--------------------------------------
+// Quit shell 
+collegedb> quit 
+or 
+ctrl + c
