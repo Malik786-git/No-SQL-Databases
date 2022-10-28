@@ -1,0 +1,80 @@
+--------------------------------------
+// show databases
+
+test> show dbs
+
+--------------------------------------
+// create new database
+
+test> use collegedb     
+collegedb> _  
+note: use command switch and create db if not available
+
+
+--------------------------------------
+// delete databases
+collegedb> db.dropDatabases()    // delete current data base, in this case it is delete collegedb
+
+
+
+
+--------------------------------------
+// create collection and insert data
+collegedb> db.student.insertOne({'name': 'malik', 'age': 24})
+
+Note: now we write command show dbs, so it show the collegedb as a db, because it have an collection and document
+
+
+--------------------------------------
+// second method to create collection with validation rule
+collegedb> db.createCollection("teacher", {validator:{$jsonSchema:{bsonType: "object",
+                                                                  required:["name", "age", ],
+                                                                  properties:{name: {bsonType: "string", description: "must be string required for name" }, 
+                                                                              age: {bsonType: "int", description: "must be int required for age"}  }
+                                                                  }}})
+
+
+--------------------------------------
+// show collections
+collegedb> show collections
+
+output: student teacher // because we have two collection.
+
+
+
+--------------------------------------
+// show the collection details
+collegedb> db.getCollectionInfos({name: "teacher"})
+
+
+--------------------------------------
+// delete collection
+collegedb> db.student.drop()
+return true; if delete successful
+
+
+
+--------------------------------------
+// find data or retrieve data in collection
+collegedb> db.teacher.find()
+
+
+--------------------------------------
+// insert single data item in collection, here we have teacher collection in which to data fields name and age
+collegedb> db.teacher.insertOne({name:"malik", age:24})
+
+
+--------------------------------------
+// insert multi data in collection
+collegedb> db.teacher.insertMany([{name:"malik", age:24},{name:"kaber", age:22}])
+
+to check collection documents 👇
+collegedb> db.teacher.find()
+[
+  { _id: ObjectId("635c1578d5b206ff8d1dabab"), name: 'malik', age: 24 },
+  { _id: ObjectId("635c16e5d5b206ff8d1dabac"), name: 'malik', age: 24 },
+  { _id: ObjectId("635c16e5d5b206ff8d1dabad"), name: 'kaber', age: 22 }
+]
+
+
+--------------------------------------
