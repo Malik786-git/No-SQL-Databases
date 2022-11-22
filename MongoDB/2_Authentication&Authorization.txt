@@ -1,0 +1,25 @@
+Authorization and Role:
+
+-create user 
+    db.createUser({user: "geekyshows", pwd: "23233",roles:[{role:"read", db:"schooldb"}]})
+
+-enable Authorization
+    Open mongod conf file then write
+    security
+      Authorization: enable
+
+-Authenticate User
+    mongosh --port 23232 --authenticationDatabse "schooldb" -u "geekyshows" -p "23233"
+
+
+Built in roles
+read => It provides the ability to read data on all non system collections and the system.js collection.
+readWrite => It provides all the privileges of the read role plus ability to modify data on all non-system collections and the system.js collection.
+dbAdmin => It provide the ability to perfom administrative tasks such as schema related tasks, indexing and gathering statistics. This role does not grant privileges for user and role management.
+dbOwner => The database owner can perform any administrative action ont he database. This role combines the privileges granted by the readWrite, dbAdmin and userAdmin roles.
+userAdmin => Provide the ability to create and modify roles and users on the current database. Since the userAdmin role allows user t grant any privilage ot any user, including themselves, the role also indirectly provides superuser access to either the database or, if scoped to the admin database, the cluster.
+readAnyDatabse => Provi the same read only privilage as read on all databases.
+readWriteAnyDatabase => Provide the same privilage as readWrite on all database.
+userAdminAnyDatabase => Provide the same access to user administration operations as userAdmin on all databases.
+dbAdminAnyDatabase => Provides the same privileges as dbAdmin on all database.
+root => Provides access to the operations and all the resources.(super user)

@@ -1,0 +1,105 @@
+// crete user and give access to only read.
+// we have schooldb database with student collection..
+
+
+schooldb> db.createUser({user:'geeky', pwd:'1234', roles:[{role:'read', db:'schooldb'}]})
+output:
+{ ok: 1 }
+
+
+
+// check database user
+schooldb> show users
+output:
+[
+  {
+    _id: 'schooldb.geeky',
+    userId: new UUID("21b207b7-aba7-4e32-9fba-1d2e8590ba31"),
+    user: 'geeky',
+    db: 'schooldb',
+    roles: [ { role: 'read', db: 'schooldb' } ],
+    mechanisms: [ 'SCRAM-SHA-1', 'SCRAM-SHA-256' ]
+  }
+]
+
+
+// show roles
+schooldb> show roles
+
+
+-----------------------------------------------------
+Now we need to enable Authorization in mongoD config file
+C:\Program Files\MongoDB\Server\6.0\bin
+goto above path and open mongod.cfg file and uncomment the security and wrtie it
+
+security:
+   authorization: enabled
+
+--------------------------------------------------------
+After editing in config file, we need to restart server.
+
+Go to This pc right click select manage  and select services and application and select services.
+or 
+goto Run and write services.msc
+
+then selecting MongodbServer from list and right click and restart it.
+
+---------------------------------
+Now Start Mongosh 
+
+select our database using > use schooldb
+
+schooldb> db.students.find()
+output:
+MongoServerError: command find require Authentication 
+=============================================================================
+
+now restart command prompt and open mongosh with Authentication command
+>> mongosh --authenticationDatabase "schooldb" -u "geeky" -p "1234"
+
+now we are able to use command to read school db. for example 
+schooldb> db.students.find()
+
+// but we not able to insert data, because we have only read permission.
+
+schooldb> db.students.insertOne({'name': 'ashar','age': 23})
+MongoServerError: not authorized on schooldb to execute command { insert: "students", documents: [ { name: "ashar", age: 23, _id: ObjectId('637c7cf01092f694864f9d54') } ], ordered: true, lsid: { id: UUID("2c017b52-9e6e-4c2f-9785-926d07405afc") }, $db: "schooldb" }
+
+--------------------------------------------------------------------------------------
+Here geeky user only able to work in schooldb. not able to work
+with other databases like admin etc.
+
+so to work with other databses we need to create a super user
+
+====================================================================
+Now we crate a super user 
+
+we need to disable authorization again and go all process of mongo.config file 
+then 
+create super user this command
+> db.createUser({user:'boss', pwd: '881212', roles:["root"]})
+
+
+after create super user, again uncomment security and do whole process restart server of MongodbServer
+
+Then open command prompt and open mongosh with super user 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
